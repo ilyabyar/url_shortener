@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class LinksController < ApplicationController
+class PagesController < ApplicationController
   def new; end
 end
