@@ -6,6 +6,7 @@ module Api
       def create
         link = Link.new(link_params)
         link.process!
+        render json: LinkSerializer.new(link).serializable_hash
       end
 
       private
