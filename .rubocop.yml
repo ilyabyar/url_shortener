@@ -1,1 +1,9 @@
 inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Excludes:
+    - db/schema.rb
+    - node_modules/**/*
+
+Style/Documentation:
+  Enabled: false
