@@ -28,7 +28,9 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'carmen', '~> 1.1'
 gem 'fast_jsonapi', '~> 1.7.1', git: 'https://github.com/fast-jsonapi/fast_jsonapi'
+gem 'geocoder'
 gem 'redis-objects', '~> 1.5'
 gem 'sidekiq', '~> 6.0'
 

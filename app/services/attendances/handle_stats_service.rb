@@ -14,8 +14,12 @@ module Attendances
 
     private
 
+    def country
+      Geocoding::CountryDetector.new(@request_info[:remote_ip]).detect_country
+    end
+
     def attendance_data
-      { ip: @request_info[:remote_ip], request_info: @request_info[:headers] }
+      { ip: @request_info[:remote_ip], request_info: @request_info[:headers], country: country }
     end
 
     def save_attendance

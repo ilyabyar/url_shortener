@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_15_111819) do
+ActiveRecord::Schema.define(version: 2020_05_15_180930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,15 @@ ActiveRecord::Schema.define(version: 2020_05_15_111819) do
     t.jsonb "request_info"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "country_id", null: false
+    t.index ["country_id"], name: "index_attendances_on_country_id"
     t.index ["link_id"], name: "index_attendances_on_link_id"
+  end
+
+  create_table "countries", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "links", force: :cascade do |t|
@@ -33,5 +41,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_111819) do
     t.index ["url"], name: "index_links_on_url", using: :hash
   end
 
+  add_foreign_key "attendances", "countries"
   add_foreign_key "attendances", "links"
 end
