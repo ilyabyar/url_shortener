@@ -204,7 +204,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   listen (~> 3.2)
   pg (>= 0.18, < 2.0)
-  pry-rails
+  pry-rails (~> 0.3)
   puma (~> 4.1)
   rails (~> 6.0.3)
   rubocop (~> 0.83.0)

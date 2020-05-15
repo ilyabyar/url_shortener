@@ -23,6 +23,7 @@ module DigestGeneration
     private
 
     def generate_digest
+      # TODO: move out hardcoded values
       @digest = SecureRandom.urlsafe_base64(8 + rand(@url.length % 3))
     end
 

@@ -1,0 +1,12 @@
+default: &default
+  host: localhost:3000
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  host: peaceful-ravine-17683.herokuapp.com
+
