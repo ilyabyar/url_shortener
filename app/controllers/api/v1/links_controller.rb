@@ -9,6 +9,11 @@ module Api
         render json: LinkSerializer.new(link).serializable_hash
       end
 
+      def index
+        links = Link.all
+        render json: LinkSerializer.new(links).serializable_hash
+      end
+
       private
 
       def link_params
