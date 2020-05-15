@@ -24,7 +24,8 @@ class Links extends React.Component {
     const { links } = this.state;
     const allLinks = links.map((link) => (
       <li key={link.attributes.id}>
-        <a  href={link.attributes.shortUrl}>{link.attributes.shortUrl}</a>
+        <p><a  href={link.attributes.shortUrl}>{link.attributes.shortUrl}</a></p>
+        <p>Attendances: {link.attributes.attendancesCount}</p>
       </li>
     ));
     const nolink = (

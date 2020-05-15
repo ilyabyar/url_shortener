@@ -1,10 +1,14 @@
 # frozen_string_literal: true
 
 class Link < ApplicationRecord
+  include Redis::Objects
+
   validates :url, presence: true
   validates :digest, uniqueness: true, presence: true
 
   has_many :attendances, dependent: :destroy
+
+  counter :attendances_count_cache
 
   def process!
     return if digest

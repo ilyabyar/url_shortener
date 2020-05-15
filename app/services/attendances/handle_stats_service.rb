@@ -9,6 +9,7 @@ module Attendances
 
     def call
       save_attendance
+      increment_cache_counter
     end
 
     private
@@ -19,6 +20,10 @@ module Attendances
 
     def save_attendance
       @link.attendances.create!(attendance_data)
+    end
+
+    def increment_cache_counter
+      @link.attendances_count_cache.increment
     end
   end
 end
