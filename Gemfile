@@ -30,6 +30,7 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'fast_jsonapi', '~> 1.7.1', git: 'https://github.com/fast-jsonapi/fast_jsonapi'
+gem 'sidekiq', '~> 6.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

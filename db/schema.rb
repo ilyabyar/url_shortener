@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_14_102221) do
+ActiveRecord::Schema.define(version: 2020_05_15_111819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attendances", force: :cascade do |t|
+    t.bigint "link_id", null: false
+    t.inet "ip", null: false
+    t.jsonb "request_info"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["link_id"], name: "index_attendances_on_link_id"
+  end
 
   create_table "links", force: :cascade do |t|
     t.string "url", limit: 2048, null: false
@@ -24,4 +33,5 @@ ActiveRecord::Schema.define(version: 2020_05_14_102221) do
     t.index ["url"], name: "index_links_on_url", using: :hash
   end
 
+  add_foreign_key "attendances", "links"
 end

@@ -36,7 +36,7 @@ class Links extends React.Component {
     );
 
     return (
-      <>
+      <React.Fragment>
         <section className="jumbotron jumbotron-fluid text-center">
           <div className="container py-5">
             <h1 className="display-4">Shortened links</h1>
@@ -45,7 +45,7 @@ class Links extends React.Component {
         <div className="py-5">
           <main className="container">
             <div className="text-right mb-3">
-              <Link to="/app/link" className="btn">
+              <Link to="/app/links/new" className="btn">
                 Create New link
               </Link>
             </div>
@@ -59,7 +59,7 @@ class Links extends React.Component {
             </Link>
           </main>
         </div>
-      </>
+      </React.Fragment>
     );
   }
 }

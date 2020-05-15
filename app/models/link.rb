@@ -4,6 +4,8 @@ class Link < ApplicationRecord
   validates :url, presence: true
   validates :digest, uniqueness: true, presence: true
 
+  has_many :attendances, dependent: :destroy
+
   def process!
     return if digest
 
