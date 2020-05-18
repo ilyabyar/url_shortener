@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class LinksController < ApiController
+    class LinksController < Api::BaseController
       def create
         link = Link.new(link_params)
         link.process!

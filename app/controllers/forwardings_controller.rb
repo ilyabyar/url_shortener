@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ForwardingsController < ApplicationController
+class ForwardingsController < BaseController
   def new
     link_data = Link.fetch_data_by_digest(digest)
     request_info = Attendances::RequestInfoBuilder.new(request: request).call
