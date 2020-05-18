@@ -16,7 +16,7 @@ export default function countryStatsSelector(statsByCountry) {
     let topPercentage = 0;
     let transformedTopStats = sortBy(
           Object.entries(statsByCountry),
-          (value) => { return -value[1].attendancesCount; }
+          (value) => { return value[1].attendancesCount; }
         ).
         slice(0,threshold).
         map((pair) => {

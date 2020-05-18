@@ -9,6 +9,13 @@ class Link < ApplicationRecord
 
   has_many :attendances, dependent: :destroy
 
+  def self.fetch_data_by_digest(digest)
+    Rails.cache.fetch("digest_#{digest}") do
+      link = select(:id, :url).find_by!(digest: digest)
+      { id: link.id, url: link.url }
+    end
+  end
+
   def process!
     return if digest
 
