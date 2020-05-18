@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/:digest', to: 'forwardings#new', as: :short
   resources :forwardings, only: :new
 
-  namespace :api do
+  namespace :api, constraints: ->(req) { req.content_type == 'application/json' } do
     namespace :v1 do
       resources :links, only: %i[create index]
     end
