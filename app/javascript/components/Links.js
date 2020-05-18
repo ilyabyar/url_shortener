@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ReactCountryFlag from "react-country-flag"
+import countryStatsCalculator from "../common/countryStatsCalculator";
 
 class Links extends React.Component {
   constructor(props) {
@@ -22,13 +24,37 @@ class Links extends React.Component {
   }
   render() {
     const { links } = this.state;
-    const allLinks = links.map((link) => (
-      <li key={link.attributes.id}>
-        <p><a  href={link.attributes.shortUrl}>{link.attributes.shortUrl}</a></p>
-        <p>Attendances: {link.attributes.attendancesCount}</p>
-        <p>Uniq Attendances: {link.attributes.uniqAttendancesCount}</p>
-      </li>
-    ));
+
+    const allLinks = links.map((link) => {
+      let a = countryStatsCalculator(link.attributes.countryStats).map(countryArray => {
+          return(
+            <li key={countryArray[1].alpha}>
+              <span>
+                <ReactCountryFlag
+                  className="emojiFlag"
+                  countryCode={countryArray[1].alpha}
+                  style={{
+                    fontSize: '2em',
+                    lineHeight: '2em',
+                  }}
+                  aria-label={countryArray[0]}
+                />
+              </span>
+              <span>{countryArray[0]}</span>
+              <span>{countryArray[1].attendancesPercentage.toFixed(2) + '%'}</span>
+            </li>
+          )
+        }
+      )
+      return (
+        <li key={link.attributes.id}>
+          <p><a href={link.attributes.shortUrl}>{link.attributes.shortUrl}</a></p>
+          <p>Attendances: {link.attributes.attendancesCount}</p>
+          <p>Uniq Attendances: {link.attributes.uniqAttendancesCount}</p>
+          Statistics per country: <ul>{a}</ul>
+        </li>
+      )
+    });
     const nolink = (
       <div className="vw-100 vh-50 d-flex align-items-center justify-content-center">
         <h4>

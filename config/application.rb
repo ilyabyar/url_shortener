@@ -33,6 +33,7 @@ module UrlShortener
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+    config.country_detector = config_for(:country_detector)
     config.eager_load_paths << Rails.root.join('lib')
   end
 end

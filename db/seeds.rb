@@ -7,7 +7,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-countries_array = (Carmen::Country.all.map(&:name) + [Country::NOT_DETECTED_NAME]).map do |country_name|
+countries_array = Carmen::Country.all.map(&:name).map do |country_name|
   Country.new(name: country_name)
 end
 

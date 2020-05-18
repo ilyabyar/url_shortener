@@ -1,0 +1,8 @@
+development:
+  strategy: CountryCodeDetectorRandomMock
+
+test:
+  strategy: CountryCodeDetectorMock
+
+production:
+  strategy: CountryCodeDetector

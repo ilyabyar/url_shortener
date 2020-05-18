@@ -7,5 +7,9 @@ class Country < ApplicationRecord
     def not_detected
       @not_detected ||= Country.find_by!(name: NOT_DETECTED_NAME)
     end
+
+    def all_id_name
+      @all_id_name ||= Country.select(:id, :name).each_with_object({}) { |c, accum| accum[c.id] = c.name }
+    end
   end
 end

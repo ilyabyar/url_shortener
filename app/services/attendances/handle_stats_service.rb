@@ -29,7 +29,7 @@ module Attendances
     end
 
     def handle_attendance_stats
-      @link.save_to_redis(remote_ip)
+      @link.save_to_redis(ip: remote_ip, country: country)
     end
   end
 end
