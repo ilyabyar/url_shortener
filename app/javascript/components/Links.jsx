@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ReactCountryFlag from "react-country-flag"
 import countryStatsCalculator from "../common/countryStatsCalculator";
+import LinkModel from "../common/models/LinkModel";
+import ApiService from "../common/ApiService";
 
 class Links extends React.Component {
   constructor(props) {
@@ -12,46 +14,48 @@ class Links extends React.Component {
   }
 
   componentDidMount() {
-    const url = "/api/v1/links";
-    fetch(url, { headers: { "Content-Type": "application/json" }})
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok.");
-      })
-      .then(response => { this.setState({ links: response.data }) })
+    ApiService.linksList().then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error("Network response was not ok.");
+    }).then(response => {
+      let linkModelsArray = response.data.map((link) => {
+        return new LinkModel(link)
+      });
+      this.setState({ links: linkModelsArray })
+    })
   }
   render() {
     const { links } = this.state;
 
     const allLinks = links.map((link) => {
-      let a = countryStatsCalculator(link.attributes.countryStats).map(countryArray => {
+      let statsWithPercentage = countryStatsCalculator(link.countryStats).map(countryStat => {
           return(
-            <li key={countryArray[1].alpha}>
+            <li key={countryStat.alpha}>
               <span>
                 <ReactCountryFlag
                   className="emojiFlag"
-                  countryCode={countryArray[1].alpha}
+                  countryCode={countryStat.alpha}
                   style={{
                     fontSize: '2em',
                     lineHeight: '2em',
                   }}
-                  aria-label={countryArray[0]}
+                  aria-label={countryStat.name}
                 />
               </span>
-              <span>{countryArray[0]}</span>
-              <span>{countryArray[1].attendancesPercentage.toFixed(2) + '%'}</span>
+              <span>{countryStat.name}</span>
+              <span>{countryStat.attendancesPercentage.toFixed(2) + '%'}</span>
             </li>
           )
         }
       )
       return (
-        <li key={link.attributes.id}>
-          <p><a href={link.attributes.shortUrl}>{link.attributes.shortUrl}</a></p>
-          <p>Attendances: {link.attributes.attendancesCount}</p>
-          <p>Uniq Attendances: {link.attributes.uniqAttendancesCount}</p>
-          Statistics per country: <ul>{a}</ul>
+        <li key={link.id}>
+          <p><a href={link.shortUrl}>{link.shortUrl}</a></p>
+          <p>Attendances: {link.attendancesCount}</p>
+          <p>Uniq Attendances: {link.uniqAttendancesCount}</p>
+          Statistics per country: <ul>{statsWithPercentage}</ul>
         </li>
       )
     });
@@ -67,19 +71,11 @@ class Links extends React.Component {
       <React.Fragment>
         <div className="py-5">
           <main className="container">
-            <div className="text-right mb-3">
-              <Link to="/app/links/new" className="btn">
-                Create New link
-              </Link>
-            </div>
             <div className="row">
               <ul>
                 {links.length > 0 ? allLinks : nolink}
               </ul>
             </div>
-            <Link to="/" className="btn btn-link">
-              Home
-            </Link>
           </main>
         </div>
       </React.Fragment>

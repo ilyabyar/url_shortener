@@ -1,4 +1,5 @@
 import React from "react";
+import ApiService from "../common/ApiService";
 
 class NewLink extends React.Component {
   constructor(props) {
@@ -34,15 +35,7 @@ class NewLink extends React.Component {
       link: { url: urlString }
     };
 
-    const token = document.querySelector('meta[name="csrf-token"]').content;
-    fetch(url, {
-      method: "POST",
-      headers: {
-        "X-CSRF-Token": token,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    }).then(response => {
+    ApiService.createLink(body).then(response => {
         if (response.ok) {
           return response.json();
         }

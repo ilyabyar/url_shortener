@@ -34,5 +34,6 @@ module RedisCounter
   def clear_attendance_redis_fields
     attendances_count.clear
     uniq_attendances.clear
+    country_stats.clear
   end
 end
