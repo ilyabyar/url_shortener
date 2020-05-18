@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 module DigestGeneration
-  class GeneratorService
+  class Generator
     MAX_NUM_OF_ATTEMPTS = 5
+    MIN_LENGTH = 8
+    MAX_LENGTH_VARIETY = 3
 
-    def initialize(url:)
-      @url = url
+    def initialize
       @num_of_attemps = 0
       @uniq = false
     end
@@ -23,8 +24,7 @@ module DigestGeneration
     private
 
     def generate_digest
-      # TODO: move out hardcoded values
-      @digest = SecureRandom.urlsafe_base64(8 + rand(@url.length % 3))
+      @digest = SecureRandom.urlsafe_base64(MIN_LENGTH + rand(MAX_LENGTH_VARIETY))
     end
 
     def increment_attempts
