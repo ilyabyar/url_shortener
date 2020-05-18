@@ -1,2 +1,2 @@
 web: bin/rails server -p $PORT -e $RAILS_ENV
-worker: bundle exec sidekiq -c 2
+worker: MALLOC_ARENA_MAX=2 bundle exec sidekiq -e $RAILS_ENV -t 25 -C config/sidekiq.yml
