@@ -3,9 +3,9 @@
 class HandleAttendanceWorker
   include Sidekiq::Worker
 
-  def perform(link_id, request_info)
+  def perform(link_id, request_info_json)
     link = Link.find(link_id)
-    request_info = request_info.symbolize_keys
+    request_info = Attendances::RequestInfo.from_json(request_info_json)
     Attendances::HandleStatsService.new(link: link, request_info: request_info).call
   end
 end

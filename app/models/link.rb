@@ -2,13 +2,12 @@
 
 class Link < ApplicationRecord
   include Redis::Objects
+  include RedisCounter
 
   validates :url, presence: true
   validates :digest, uniqueness: true, presence: true
 
   has_many :attendances, dependent: :destroy
-
-  counter :attendances_count_cache
 
   def process!
     return if digest

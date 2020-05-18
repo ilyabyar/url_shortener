@@ -10,6 +10,10 @@ class LinkSerializer < BaseSerializer
   end
 
   attribute :attendances_count do |link|
-    link.attendances_count_cache.value
+    link.attendances_count.value
+  end
+
+  attribute :uniq_attendances_count do |link|
+    link.uniq_attendances.length
   end
 end

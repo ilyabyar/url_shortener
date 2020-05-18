@@ -26,6 +26,7 @@ class Links extends React.Component {
       <li key={link.attributes.id}>
         <p><a  href={link.attributes.shortUrl}>{link.attributes.shortUrl}</a></p>
         <p>Attendances: {link.attributes.attendancesCount}</p>
+        <p>Uniq Attendances: {link.attributes.uniqAttendancesCount}</p>
       </li>
     ));
     const nolink = (

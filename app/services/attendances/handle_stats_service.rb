@@ -9,25 +9,27 @@ module Attendances
 
     def call
       save_attendance
-      increment_cache_counter
+      handle_attendance_stats
     end
 
     private
 
-    def country
-      Geocoding::CountryDetector.new(@request_info[:remote_ip]).detect_country
-    end
-
-    def attendance_data
-      { ip: @request_info[:remote_ip], request_info: @request_info[:headers], country: country }
-    end
+    delegate :remote_ip, to: :@request_info
 
     def save_attendance
       @link.attendances.create!(attendance_data)
     end
 
-    def increment_cache_counter
-      @link.attendances_count_cache.increment
+    def attendance_data
+      { ip: remote_ip, request_info: @request_info.headers, country: country }
+    end
+
+    def country
+      Geocoding::CountryDetector.new(remote_ip).detect_country
+    end
+
+    def handle_attendance_stats
+      @link.save_to_redis(remote_ip)
     end
   end
 end

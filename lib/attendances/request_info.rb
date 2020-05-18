@@ -2,27 +2,22 @@
 
 module Attendances
   class RequestInfo
-    RAILS_INTERNAL_HEADERS_SYM = '.'
+    attr_accessor :remote_ip, :headers
 
-    def initialize(request:)
-      @request = request
+    def initialize(headers:, remote_ip:)
+      @headers = headers
+      @remote_ip = remote_ip
     end
 
     def as_json
       {
-        remote_ip: @request.remote_ip,
-        headers: all_headers
+        remote_ip: @remote_ip,
+        headers: @headers
       }
     end
 
-    private
-
-    def all_headers
-      @request.headers.env.reject { |key| internal_header?(key) }
-    end
-
-    def internal_header?(name)
-      name.to_s.include?(RAILS_INTERNAL_HEADERS_SYM)
+    def self.from_json(options)
+      new(**options.symbolize_keys)
     end
   end
 end
