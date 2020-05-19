@@ -43,8 +43,8 @@ class NewLink extends React.Component {
     ApiService.createLink(body).then(response => {
         return response.json();
       }).then((responseBody) => {
-        if(responseBody.data) {
-          this.handleNewUrl(responseBody.data.attributes.shortUrl);
+        if(responseBody.url) {
+          this.handleNewUrl(responseBody.url);
         } else {
           this.handleValidationError(responseBody.errors)
         }

@@ -6,7 +6,7 @@ module Api
       def create
         link = Link.new(link_params)
         response_to_render = if link.process!
-                               { json: LinkSerializer.new(link), status: :created }
+                               { json: { url: short_url(digest: link.digest) }, status: :created }
                              else
                                { json: { errors: link.errors.full_messages }, status: :unprocessable_entity }
                              end
