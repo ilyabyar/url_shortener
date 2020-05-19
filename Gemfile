@@ -33,6 +33,7 @@ gem 'fast_jsonapi', '~> 1.7.1', git: 'https://github.com/fast-jsonapi/fast_jsona
 gem 'geocoder'
 gem 'redis-objects', '~> 1.5'
 gem 'sidekiq', '~> 6.0'
+gem 'validate_url', '~> 1.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

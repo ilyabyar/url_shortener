@@ -5,13 +5,17 @@ module Api
     class LinksController < Api::BaseController
       def create
         link = Link.new(link_params)
-        link.process!
-        render json: LinkSerializer.new(link).serializable_hash
+        response_to_render = if link.process!
+                               { json: LinkSerializer.new(link), status: :created }
+                             else
+                               { json: { errors: link.errors.full_messages }, status: :unprocessable_entity }
+                             end
+        render response_to_render
       end
 
       def index
         links = Link.all
-        render json: LinkSerializer.new(links).serializable_hash
+        render json: LinkSerializer.new(links)
       end
 
       private

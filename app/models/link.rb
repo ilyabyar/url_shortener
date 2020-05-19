@@ -4,7 +4,7 @@ class Link < ApplicationRecord
   include Redis::Objects
   include RedisCounter
 
-  validates :url, presence: true
+  validates :url, presence: true, url: { public_suffix: true }
   validates :digest, uniqueness: true, presence: true
 
   has_many :attendances, dependent: :destroy
@@ -31,7 +31,7 @@ class Link < ApplicationRecord
 
     self.url = process_url
     self.digest = generate_digest
-    save!
+    save
   end
 
   private

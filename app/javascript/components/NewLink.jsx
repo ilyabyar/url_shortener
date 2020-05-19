@@ -6,16 +6,22 @@ class NewLink extends React.Component {
     super(props);
     this.state = {
       url: "",
-      shortLink: ""
+      shortLink: "",
+      errors: []
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.handleNewUrl = this.handleNewUrl.bind(this);
+    this.handleValidationError = this.handleValidationError.bind(this);
   }
 
   handleNewUrl(shortLink) {
-    this.setState({ url: '', shortLink: shortLink });
+    this.setState({ url: '', shortLink: shortLink, errors: [] });
+  }
+
+  handleValidationError(errors) {
+    this.setState({ errors: errors });
   }
 
   onChange(event) {
@@ -24,7 +30,6 @@ class NewLink extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const url = "/api/v1/links";
     const urlString = this.state.url;
 
     if (urlString.length === 0) {
@@ -36,18 +41,26 @@ class NewLink extends React.Component {
     };
 
     ApiService.createLink(body).then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error("Network response was not ok.");
+        return response.json();
       }).then((responseBody) => {
-        this.handleNewUrl(responseBody.data.attributes.shortUrl);
+        if(responseBody.data) {
+          this.handleNewUrl(responseBody.data.attributes.shortUrl);
+        } else {
+          this.handleValidationError(responseBody.errors)
+        }
       }).catch(error => console.log(error.message));
   }
 
   render() {
     const urlValue = this.state.url;
     const shortLink = this.state.shortLink;
+    const errors = this.state.errors.map((error) => {
+      return(
+        <small key={error} className="text-danger">
+          {error}
+        </small>
+      )
+    })
 
     return (
       <React.Fragment>
@@ -70,6 +83,7 @@ class NewLink extends React.Component {
                     required
                     onChange={this.onChange}
                   />
+                  {errors}
                 </div>
                 <button type="submit" className="btn btn-primary mt-3">
                   Shorten
