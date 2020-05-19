@@ -4,4 +4,5 @@ production:
   :concurrency: <%= ENV.fetch('SIDEKIQ_PROCESSES', 10) %>
 :queues:
   - attendance
+  - redis_stats
   - default

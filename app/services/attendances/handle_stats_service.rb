@@ -29,7 +29,7 @@ module Attendances
     end
 
     def handle_attendance_stats
-      @link.save_to_redis(ip: remote_ip, country: country)
+      RedisStatsWorker.perform_async(@link.id, country.id, remote_ip)
     end
   end
 end

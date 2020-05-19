@@ -8,8 +8,18 @@ class Country < ApplicationRecord
       @not_detected ||= Country.find_by!(name: NOT_DETECTED_NAME)
     end
 
-    def all_id_name
-      @all_id_name ||= Country.select(:id, :name).each_with_object({}) { |c, accum| accum[c.id] = c.name }
+    def fetch_by_id(id)
+      grouped_by_id.fetch(id)
     end
+
+    private
+
+    def grouped_by_id
+      @grouped_by_id ||= Country.select(:id, :name).each_with_object({}) { |c, accum| accum[c.id] = c }
+    end
+  end
+
+  def alpha_2_code(detector: Carmen::Country)
+    detector.named(name).alpha_2_code
   end
 end

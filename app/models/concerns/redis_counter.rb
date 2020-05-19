@@ -9,12 +9,16 @@ module RedisCounter
     hash_key :country_stats
 
     after_commit :clear_attendance_redis_fields, on: :destroy
+
+    delegate :value, to: :attendances_count, prefix: true
+    delegate :size, to: :uniq_attendances, prefix: true
+    delegate :value, to: :country_stats, prefix: true
   end
 
-  def save_to_redis(ip:, country:)
+  def save_to_redis(ip:, country_id:)
     increment_attendances
     add_to_attendances_set(ip)
-    add_stats_by_country(country)
+    add_stats_by_country(country_id)
   end
 
   private
@@ -27,8 +31,8 @@ module RedisCounter
     uniq_attendances.add key
   end
 
-  def add_stats_by_country(country)
-    country_stats.incr(country.id, 1)
+  def add_stats_by_country(country_id)
+    country_stats.incr(country_id, 1)
   end
 
   def clear_attendance_redis_fields
