@@ -3,6 +3,8 @@
 class Country < ApplicationRecord
   NOT_DETECTED_NAME = 'Not detected'
 
+  validates :name, presence: true
+
   class << self
     def not_detected
       @not_detected ||= Country.find_by!(name: NOT_DETECTED_NAME)
