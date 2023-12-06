@@ -8,7 +8,7 @@ function calculateTotal(countries) {
 }
 
 function getTopCountries(countries, threshold) {
-  return sortBy(countries, (countryStat) => { return countryStat.attendancesCount; }).slice(0,threshold);
+  return sortBy(countries, (countryStat) => { return -countryStat.attendancesCount; }).slice(0,threshold);
 }
 
 function distributePercentage(countries, total) {
